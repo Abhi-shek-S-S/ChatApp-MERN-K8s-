@@ -1,10 +1,7 @@
-[![Fork Button](https://img.shields.io/github/forks/iemafzalhassan/full-stack_chatApp?style=social)](https://github.com/iemafzalhassan/full-stack_chatApp/fork)
-
-
 # Real-Time Chat Application
 
 
-Welcome to the **Full Stack Realtime Chat App** project, where we're building a scalable and secure real-time chat experience using the latest technologies. Whether you're a seasoned developer or a beginner, we invite you to contribute and be a part of this exciting journey!
+Welcome to the **Full Stack Realtime Chat App** project, a personal Kubernetes-ready chat application built to showcase a modern full-stack architecture with Docker and Kubernetes. This repository is maintained independently by Abhishek and is intended as a self-owned project for learning, deployment, and development.
 
 ## Table of Contents
 
@@ -241,23 +238,11 @@ flowchart LR
 
 ---
 
-### 🤝 Contributing
+### 🤝 Ownership and Maintenance
 
+This repository is maintained as a personal project and is owned by Abhishek. Feel free to use it for learning, experimentation, or as a base for your own implementations.
 
-We welcome contributions from DevOps & Developer of all skill levels! Here's how you can contribute:
-
-**Report bugs:** If you encounter any bugs or issues, please open an issue with detailed information.
-**Suggest features:** Have an idea for a new feature? Open an issue to discuss it with the community.
-**Submit pull requests:** If you have a fix or a feature you'd like to contribute, submit a pull request. Ensure your changes pass any linting or tests, if applicable.
-
-### 🌐 Join the Community
-
-We invite you to join our community of developers and contributors. Let's work together to build an amazing real-time chat application!
-
-* **Star this repository** to show your support
-* **Fork this repository** to contribute to the project
-* **Open an issue** to report bugs or suggest features
-* **Submit a pull request** to contribute code changes
+If you want to suggest improvements, you can open an issue or contact the maintainer directly.
 
 ## 🔮 Future Plans
 
