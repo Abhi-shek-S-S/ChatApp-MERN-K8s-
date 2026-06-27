@@ -40,7 +40,8 @@ This project aims to provide a real-time chat experience that's both scalable an
 * **Backend:** Node.js, Express, MongoDB, Socket.io
 * **Frontend:** React, TailwindCSS
 * **Containerization:** Docker
-* **Orchestration:** Kubernetes (planned)
+* **Orchestration:** Kubernetes
+* **Ingress & Routing:** NGINX Ingress Controller
 * **Web Server:** Nginx
 * **State Management:** Zustand
 * **Authentication:** JWT
@@ -53,6 +54,8 @@ This project aims to provide a real-time chat experience that's both scalable an
 * **[Node.js](https://nodejs.org/)** (v14 or higher)
 * **[Docker](https://www.docker.com/get-started)** (for containerizing the app)
 * **[Git](https://git-scm.com/downloads)** (to clone the repository)
+* **[kubectl](https://kubernetes.io/docs/tasks/tools/)** (to manage Kubernetes resources)
+* **A Kubernetes cluster** (Minikube, Docker Desktop Kubernetes, or a cloud-managed cluster)
 
 
 ### 📝 Environment Configuration
@@ -179,7 +182,64 @@ You can now interact with the real-time chat app and start messaging!
 
 ---
 
+## ☸️ Kubernetes Deployment
 
+This project includes Kubernetes manifests in the [k8s](k8s) folder so the application can run in a cluster instead of only through Docker Compose. Kubernetes helps organize the app into reusable resources such as Deployments, Services, Secrets, PersistentVolumeClaims, and an Ingress rule.
+
+### What is deployed in Kubernetes?
+
+- **Frontend Deployment:** Runs the React/Vite frontend and exposes it through a Service.
+- **Backend Deployment:** Runs the Node.js/Express API and exposes it internally through a Service.
+- **MongoDB Deployment:** Runs the database with persistent storage so chat data is retained.
+- **Ingress:** Routes incoming traffic so requests to `/` go to the frontend and requests to `/api` go to the backend.
+- **Secrets:** Stores sensitive values such as the JWT secret securely.
+
+### Deploy to Kubernetes
+
+If you have a Kubernetes cluster available, you can deploy the project with:
+
+```bash
+kubectl apply -f k8s/namespace.yml
+kubectl apply -f k8s/secrets.yml
+kubectl apply -f k8s/mongodb-pv.yml
+kubectl apply -f k8s/mongodb-pvc.yml
+kubectl apply -f k8s/mongodb-deployment.yml
+kubectl apply -f k8s/mongodb-service.yml
+kubectl apply -f k8s/backend-deployment.yml
+kubectl apply -f k8s/backend-serive.yml
+kubectl apply -f k8s/frontend-deployment.yml
+kubectl apply -f k8s/frontend-service.yml
+kubectl apply -f k8s/ingress.yml
+```
+
+### Verify the deployment
+
+```bash
+kubectl get pods,svc,ingress -n chat-app
+```
+
+> If you are using a local cluster, update the host value in [k8s/ingress.yml](k8s/ingress.yml) to your local domain or add it to your hosts file.
+
+### Architecture Overview
+
+The application is split into four main layers in Kubernetes:
+
+```mermaid
+flowchart LR
+    User[User] --> Ingress[Ingress / NGINX]
+    Ingress --> Frontend[Frontend Service]
+    Ingress --> Backend[Backend Service]
+    Frontend --> React[React App]
+    Backend --> API[Express API]
+    API --> DB[(MongoDB)]
+```
+
+- **User** accesses the application through the Ingress endpoint.
+- **Frontend Service** serves the React UI.
+- **Backend Service** handles authentication, chat logic, and API requests.
+- **MongoDB** stores users, messages, and chat-related data.
+
+---
 
 ### 🤝 Contributing
 
@@ -204,8 +264,9 @@ We invite you to join our community of developers and contributors. Let's work t
 
 This project is evolving, and here are a few exciting things on the horizon:
 
+* [x] **Kubernetes (K8s):** Add Kubernetes manifests for container orchestration and deployment.
 * [ ] **CI/CD Pipelines:** Implement Continuous Integration and Continuous Deployment pipelines to automate testing and deployment.
-* [ ] **Kubernetes (K8s):** Add Kubernetes manifests for container orchestration to deploy the app on cloud platforms like AWS, GCP, or Azure.
+* [ ] **Helm Charts:** Package the Kubernetes resources for easier environment-based deployment.
 * [ ] **Feature Expansion:** Add more features like group chats, media sharing, and user status updates.
 * **Stay tuned for updates as we continue to improve and expand this project!**
 
